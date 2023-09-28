@@ -10,6 +10,9 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
     group = 'com.mjc.school'
+    tasks.withType(JavaCompile) {
+        options.compilerArgs.addAll(['-g'])
+    }
 
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
@@ -22,11 +25,12 @@ subprojects {
         implementation "org.springframework:spring-context:$springVersion"
         implementation "org.springframework:spring-core:$springVersion"
         implementation "org.aspectj:aspectjweaver:1.9.7"
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:$dataJpaVersion"
 
         testImplementation "org.springframework:spring-test:$springVersion"
         testImplementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
         testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
-        testImplementation "com.tngtech.archunit:archunit:$archUnitVersion"
+        testImplementation "com.tngtech.archunit:archunit-junit5:$archUnitVersion"
 
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"

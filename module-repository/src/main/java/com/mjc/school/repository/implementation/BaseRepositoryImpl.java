@@ -1,24 +1,22 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.BaseRepository;
-import com.mjc.school.repository.datasource.DataSource;
 import com.mjc.school.repository.model.BaseEntity;
 
-import java.util.Comparator;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseRepositoryImpl<T extends BaseEntity<Long>> implements BaseRepository<T, Long> {
-    protected DataSource dataSource;
-    protected List<T> allItems;
     @Override
     public List<T> readAll() {
-        return allItems;
+        var findAll = getEntityManager().createQuery("SELECT * FROM " + getTableName());
+        return findAll.getResultList();
     }
 
     @Override
     public Optional<T> readById(Long id) {
-        return allItems.stream().filter(a -> a.getId().equals(id)).findFirst();
+        return Optional.ofNullable(getEntityManager().find(getEntityClass(), id));
     }
 
     @Override
@@ -29,14 +27,12 @@ public abstract class BaseRepositoryImpl<T extends BaseEntity<Long>> implements 
 
     @Override
     public boolean deleteById(Long id) {
-        int index;
-        Optional<T> itemToDelete = readById(id);
-        if (itemToDelete.isPresent() && allItems.contains(itemToDelete.get()))
-            index = allItems.indexOf(itemToDelete.get());
+        var obj = readById(id);
+        if (obj.isPresent())
+            getEntityManager().remove(obj);
         else
-            throw new RuntimeException("found no news object with id: " + id);
-        allItems.remove(index);
-        return true;
+            return false;
+        return !readById(id).isPresent();
     }
 
     @Override
@@ -45,9 +41,11 @@ public abstract class BaseRepositoryImpl<T extends BaseEntity<Long>> implements 
         return itemById.isPresent();
     }
 
-    protected Long generateID() {
-        Long largestId = allItems.stream()
-                .max(Comparator.comparingLong(BaseEntity::getId)).get().getId();
-        return ++largestId;
+    public void insert(T entity) {
+        getEntityManager().merge(entity);
     }
+
+    protected abstract Class<T> getEntityClass();
+    protected abstract EntityManager getEntityManager();
+    protected abstract String getTableName();
 }

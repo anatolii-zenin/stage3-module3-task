@@ -1,11 +1,11 @@
 package com.mjc.school.service.implementation;
 
+import com.mjc.school.repository.model.implementation.AuthorEntityImpl;
 import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.AuthorDTOResp;
 import com.mjc.school.service.dto.implementation.AuthorDTOReqImpl;
 import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.model.AuthorEntity;
-import com.mjc.school.repository.model.implementation.AuthorModel;
 import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.DTOMapper;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class AuthorServiceImpl extends BaseServiceImpl<AuthorDTOReq, AuthorDTORe
 
     @Override
     protected AuthorDTOResp entityToDto(AuthorEntity authorEntity) {
-        return DTOMapper.instance.authorToAuthorDto((AuthorModel) authorEntity);
+        return DTOMapper.instance.authorToAuthorDto((AuthorEntityImpl) authorEntity);
     }
 
      public AuthorServiceImpl(AuthorRepository authorRepository) {

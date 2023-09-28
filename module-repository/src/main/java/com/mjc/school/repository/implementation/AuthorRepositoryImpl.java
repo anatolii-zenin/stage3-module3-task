@@ -1,53 +1,66 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.datasource.DataSource;
 import com.mjc.school.repository.model.AuthorEntity;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
-@Scope("singleton")
-public class AuthorRepositoryImpl extends BaseRepositoryImpl<AuthorEntity>
+@Transactional
+public class AuthorRepositoryImpl
         implements AuthorRepository {
+    @PersistenceContext
+    EntityManager entityManager;
+
+    private String tableName = "author";
+
     @Override
+    public List<AuthorEntity> readAll() {
+        var findAll = getEntityManager().createQuery("SELECT a FROM author a", AuthorEntity.class);
+        return findAll.getResultList();
+    }
+
+    @Override
+    public Optional<AuthorEntity> readById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+
     public AuthorEntity create(AuthorEntity entity) {
-        var id = generateID();
-        var now = LocalDateTime.now();
-        entity.setId(id);
-        entity.setCreateDate(now);
-        entity.setLastUpdateDate(now);
-        allItems.add(entity);
-        return entity;
+        getEntityManager().merge(entity);
+        return entityManager.find(AuthorEntity.class, entity.getId());
     }
 
     @Override
     public AuthorEntity update(AuthorEntity entity) {
-        var id = entity.getId();
-        var entityToUpdate = this.readById(id);
-        int index;
-        if (entityToUpdate.isPresent() && allItems.contains(entityToUpdate.get()))
-            index = allItems.indexOf(entityToUpdate.get());
-        else
-            throw new RuntimeException("found no author object with id: " + id);
-        allItems.get(index).setName(entity.getName());
-        var now = LocalDateTime.now();
-        allItems.get(index).setLastUpdateDate(now);
-        return allItems.get(index);
+        return null;
     }
 
     @Override
     public boolean deleteById(Long id) {
-        allItems.removeIf(item -> item.getId().equals(id));
-        dataSource.getAllNews().removeIf(item -> item.getAuthorId().equals(id));
-        return true;
+        return false;
     }
 
-    public AuthorRepositoryImpl(DataSource dataSource) {
-        this.dataSource = dataSource;
-        allItems = dataSource.getAllAuthors();
+    @Override
+    public boolean existById(Long id) {
+        return false;
     }
 
+    protected Class<AuthorEntity> getEntityClass() {
+        return AuthorEntity.class;
+    }
+
+    protected EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    protected String getTableName() {
+        return tableName;
+    }
 }

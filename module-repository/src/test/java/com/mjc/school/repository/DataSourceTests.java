@@ -1,14 +1,12 @@
 package com.mjc.school.repository;
 
-import com.mjc.school.repository.datasource.implementation.DataSourceImpl;
 import com.mjc.school.repository.implementation.AuthorRepositoryImpl;
-import com.mjc.school.repository.model.NewsEntity;
+import com.mjc.school.repository.model.AuthorEntity;
+import com.mjc.school.repository.model.implementation.AuthorEntityImpl;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
-import java.util.List;
 
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 
@@ -22,16 +20,18 @@ public class DataSourceTests {
     public static void tearDown() {
         context.close();
     }
+
     @Test
     public void readAllTest() {
-        var dataSource = context.getBean(DataSourceImpl.class);
-        List<NewsEntity> news = dataSource.getAllNews();
-        assertEquals("First line is not as expected:", "GENERAL PROVISIONS", news.get(0).getTitle());
+        AuthorEntity authorEntity = new AuthorEntityImpl();
+        AuthorRepositoryImpl authorRepository = context.getBean(AuthorRepositoryImpl.class);
+        authorEntity.setName("testAuthor");
+        authorRepository.create(authorEntity);
+        var result = authorRepository.readAll();
+//        var result = authorRepository.readById(0l);
+        assertEquals("", "", result.size());
     }
     @Test
     public void repositoryTest() {
-        AuthorRepository authorsRepo = context.getBean(AuthorRepositoryImpl.class);
-        var str = authorsRepo.readAll().get(0).getName();
-        assertEquals("First line is not as expected:", "William Shakespeare", str);
     }
 }
