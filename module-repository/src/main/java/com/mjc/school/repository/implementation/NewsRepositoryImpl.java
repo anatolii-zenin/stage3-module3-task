@@ -1,43 +1,40 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.NewsRepository;
-import com.mjc.school.repository.model.NewsEntity;
+import com.mjc.school.repository.model.implementation.NewsEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
 @Scope("singleton")
-public class NewsRepositoryImpl extends BaseRepositoryImpl<NewsEntity>
+@Transactional
+public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         implements NewsRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private String tableName = "news";
     @Override
-    public NewsEntity create(NewsEntity entity) {
-        return null;
-    }
-
-    @Override
+    @Transactional
     public NewsEntity update(NewsEntity entity) {
-        return null;
+        NewsEntity dbEntity = (NewsEntity) getEntityManager().find(getEntityClass(), entity.getId());
+        dbEntity.setTitle(entity.getTitle());
+        dbEntity.setContent(entity.getContent());
+        dbEntity.setAuthorId(entity.getAuthorId());
+        getEntityManager().merge(dbEntity);
+        return (NewsEntity) getEntityManager().find(getEntityClass(), dbEntity.getId());
     }
 
     @Override
-    protected Class<NewsEntity> getEntityClass() {
+    protected Class getEntityClass() {
         return NewsEntity.class;
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return entityManager;
-    }
-
-    @Override
-    protected String getTableName() {
-        return tableName;
     }
 }

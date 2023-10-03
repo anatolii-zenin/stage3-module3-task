@@ -1,66 +1,36 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.model.AuthorEntity;
+import com.mjc.school.repository.dataloader.DataLoader;
+import com.mjc.school.repository.model.implementation.AuthorEntity;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.Optional;
 
 @Repository
-@Transactional
-public class AuthorRepositoryImpl
+@Scope("singleton")
+public class AuthorRepositoryImpl extends AbstractBaseRepositoryImpl<AuthorEntity>
         implements AuthorRepository {
     @PersistenceContext
     EntityManager entityManager;
 
-    private String tableName = "author";
-
     @Override
-    public List<AuthorEntity> readAll() {
-        var findAll = getEntityManager().createQuery("SELECT a FROM author a", AuthorEntity.class);
-        return findAll.getResultList();
-    }
-
-    @Override
-    public Optional<AuthorEntity> readById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-
-    public AuthorEntity create(AuthorEntity entity) {
-        getEntityManager().merge(entity);
-        return entityManager.find(AuthorEntity.class, entity.getId());
-    }
-
-    @Override
+    @Transactional
     public AuthorEntity update(AuthorEntity entity) {
-        return null;
+        AuthorEntity dbEntity = (AuthorEntity) getEntityManager().find(getEntityClass(), entity.getId());
+        dbEntity.setName(entity.getName());
+        return (AuthorEntity) getEntityManager().find(getEntityClass(), dbEntity.getId());
     }
 
     @Override
-    public boolean deleteById(Long id) {
-        return false;
-    }
-
-    @Override
-    public boolean existById(Long id) {
-        return false;
-    }
-
-    protected Class<AuthorEntity> getEntityClass() {
+    protected Class getEntityClass() {
         return AuthorEntity.class;
     }
 
     protected EntityManager getEntityManager() {
         return entityManager;
-    }
-
-    protected String getTableName() {
-        return tableName;
     }
 }

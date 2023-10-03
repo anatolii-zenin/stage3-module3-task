@@ -1,18 +1,18 @@
-CREATE SCHEMA IF NOT EXISTS test1;
-SET SCHEMA test1;
+CREATE SCHEMA IF NOT EXISTS test;
+SET SCHEMA test;
 
-CREATE TABLE author (
+CREATE TABLE IF NOT EXISTS author (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(15) NOT NULL,
+    name VARCHAR(25) NOT NULL,
     createDate DATE,
     lastUpdateDate DATE,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE news (
+CREATE TABLE IF NOT EXISTS news (
     id BIGINT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(30),
-    content VARCHAR(255),
+    title VARCHAR(50),
+    content VARCHAR(355),
     createDate DATE,
     lastUpdateDate DATE,
     author_id BIGINT NOT NULL,

@@ -1,6 +1,7 @@
 package com.mjc.school.repository;
 
 import org.springframework.context.annotation.*;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -13,16 +14,15 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan()
+@ComponentScan
 @EnableTransactionManagement
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class RepoSpringConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setJpaDialect(new HibernateJpaDialect());
-        entityManagerFactoryBean.setPackagesToScan("com.mjc.school.repository");
+        entityManagerFactoryBean.setPackagesToScan("com.mjc.school.repository.model.implementation");
 
         final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -34,7 +34,8 @@ public class RepoSpringConfig {
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:mem:test1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'");
+//        dataSource.setUrl("jdbc:h2:mem:test1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'");
+        dataSource.setUrl("jdbc:h2:file:./testdb;INIT=RUNSCRIPT FROM 'classpath:schema.sql'");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
@@ -44,6 +45,7 @@ public class RepoSpringConfig {
     public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
+        transactionManager.setDataSource(dataSource());
         transactionManager.setEntityManagerFactory(entityManagerFactory);
         return transactionManager;
     }
