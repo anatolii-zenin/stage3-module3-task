@@ -1,16 +1,21 @@
 package com.mjc.school.service.validator;
 
+import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsDTOReq;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class NewsValidator implements Validator<NewsDTOReq> {
+    @Autowired
     private NewsService newsService;
-    private int titleLengthFrom = 3;
-    private int titleLengthTo = 30;
-    private int contentLengthFrom = 3;
-    private int contentLengthTo = 255;
+    @Autowired
+    private AuthorService authorService;
+    private final int titleLengthFrom = 3;
+    private final int titleLengthTo = 50;
+    private final int contentLengthFrom = 3;
+    private final int contentLengthTo = 355;
     @Override
     public boolean validate(NewsDTOReq req) {
         StringBuilder errors = new StringBuilder();
@@ -18,11 +23,11 @@ public class NewsValidator implements Validator<NewsDTOReq> {
             errors.append("News with id " + req.getId() + " does not exist.\n");
         if (!validateRange(req.getTitle().length(),titleLengthFrom, titleLengthTo))
             errors.append("Title length should be between " + titleLengthFrom + " and " +
-                    titleLengthTo + " characters. Current length: " + req.getTitle().length() + ".\n");
+                    titleLengthTo + " characters. Provided length: " + req.getTitle().length() + ".\n");
         if (!validateRange(req.getContent().length(), contentLengthFrom, contentLengthTo))
             errors.append("Title length should be between " + contentLengthFrom + " and " +
-                    contentLengthTo + " characters. Current length: " + req.getContent().length() + ".\n");
-        if (newsService.readById(req.getAuthorId()) == null)
+                    contentLengthTo + " characters. Provided length: " + req.getContent().length() + ".\n");
+        if (authorService.readById(req.getAuthorId()) == null)
             errors.append("Author with id " + req.getAuthorId() + " does not exist.\n");
         if (errors.length() > 0)
             throw new RuntimeException(errors.toString());
@@ -31,9 +36,5 @@ public class NewsValidator implements Validator<NewsDTOReq> {
 
     private boolean validateRange(int value, int from, int to) {
         return value > from && value < to;
-    }
-
-    public NewsValidator(NewsService newsService) {
-        this.newsService = newsService;
     }
 }
