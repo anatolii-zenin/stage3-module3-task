@@ -28,7 +28,7 @@ public class DemoDataLoader {
     public void populateAuthors() {
         var authorLines = readAuthorLines();
         for (String authorLine : authorLines) {
-            AuthorDTOReq author = (AuthorDTOReq) applicationContext.getBean("authorDtoReqImpl");
+            AuthorDTOReq author = (AuthorDTOReq) applicationContext.getBean("authorDtoReq");
             author.setName(authorLine);
 
             authorService.create(author);
@@ -40,7 +40,7 @@ public class DemoDataLoader {
         var titleLines = readTitleLines();
         var contentLines = readContentLines();
         for (int i=0; i < titleLines.size(); i++) {
-            NewsDTOReq news = (NewsDTOReq) applicationContext.getBean("newsDtoReqImpl");
+            NewsDTOReq news = (NewsDTOReq) applicationContext.getBean("newsDtoReq");
             news.setTitle(titleLines.get(i));
             news.setContent(contentLines.get(i));
             news.setAuthorId((long) i+1);
