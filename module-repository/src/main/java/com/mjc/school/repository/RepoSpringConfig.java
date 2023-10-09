@@ -33,7 +33,6 @@ public class RepoSpringConfig {
     public DataSource dataSource() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("org.h2.Driver");
-//        dataSource.setUrl("jdbc:h2:mem:test1;INIT=RUNSCRIPT FROM 'classpath:schema.sql'");
         dataSource.setUrl("jdbc:h2:file:./testdb");
         dataSource.setUsername("sa");
         dataSource.setPassword("");
