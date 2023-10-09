@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
-@Component
+@Component("authorDtoReqImpl")
 public class AuthorDTOReqImpl implements AuthorDTOReq {
     protected Long id;
     protected String name;

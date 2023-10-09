@@ -5,7 +5,6 @@ import com.mjc.school.service.dto.NewsDTOReq;
 import com.mjc.school.service.dto.NewsDTOResp;
 import com.mjc.school.service.dto.implementation.NewsDTOReqImpl;
 import com.mjc.school.repository.NewsRepository;
-import com.mjc.school.service.DTOMapper;
 import com.mjc.school.service.NewsService;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -16,12 +15,12 @@ public class NewsServiceImpl extends BaseServiceImpl<NewsDTOReq, NewsDTOResp, Ne
         implements NewsService {
     @Override
     protected NewsEntity dtoToEntity(NewsDTOReq newsDTOReq) {
-        return DTOMapper.instance.newsReqToEntity((NewsDTOReqImpl) newsDTOReq);
+        return mapper.newsReqToEntity((NewsDTOReqImpl) newsDTOReq);
     }
 
     @Override
     protected NewsDTOResp entityToDto(NewsEntity newsEntity) {
-        return DTOMapper.instance.newsToDto((NewsEntity) newsEntity);
+        return mapper.newsToDto(newsEntity);
     }
 
     public NewsServiceImpl(NewsRepository newsRepository) {

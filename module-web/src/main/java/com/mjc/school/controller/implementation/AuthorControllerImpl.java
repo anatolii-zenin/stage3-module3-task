@@ -5,11 +5,13 @@ import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.AuthorDTOResp;
 import com.mjc.school.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
 @Controller
+@Scope("singleton")
 public class AuthorControllerImpl implements AuthorController {
     @Autowired
     AuthorService service;

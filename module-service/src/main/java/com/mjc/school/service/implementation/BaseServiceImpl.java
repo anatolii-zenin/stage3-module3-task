@@ -3,7 +3,9 @@ package com.mjc.school.service.implementation;
 import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.BaseEntity;
 import com.mjc.school.service.BaseService;
+import com.mjc.school.service.mapper.DTOMapper;
 import com.mjc.school.service.validator.Validate;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +14,8 @@ public abstract class BaseServiceImpl<Req, Resp, Entity extends BaseEntity<Long>
         Repository extends BaseRepository<Entity, Long>>
         implements BaseService<Req, Resp, Long> {
     protected Repository repo;
+    @Autowired
+    protected DTOMapper mapper;
     @Override
     public List<Resp> readAll() {
         return fetchAll();
