@@ -3,6 +3,7 @@ package com.mjc.school.controller.command.invoker.implementation;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.command.implementation.authorCommands.*;
 import com.mjc.school.controller.command.implementation.newsCommands.*;
+import com.mjc.school.controller.command.implementation.utilCommands.LoadDemoData;
 import com.mjc.school.controller.command.invoker.Invoker;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -38,7 +39,8 @@ public class InvokerImpl implements Invoker {
             GetAuthorById getAuthorById,
             ReadNewsById readNewsById,
             UpdateAuthor updateAuthor,
-            UpdateNews updateNews
+            UpdateNews updateNews,
+            LoadDemoData loadDemoData
     ) {
         commandList.add(createAuthor);
         commandList.add(createNews);
@@ -50,5 +52,6 @@ public class InvokerImpl implements Invoker {
         commandList.add(readNewsById);
         commandList.add(updateAuthor);
         commandList.add(updateNews);
+        commandList.add(loadDemoData);
     }
 }

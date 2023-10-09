@@ -1,9 +1,7 @@
 package com.mjc.school.main;
 
-import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.command.invoker.Invoker;
 import com.mjc.school.controller.command.invoker.implementation.InvokerImpl;
-import com.mjc.school.controller.implementation.NewsControllerImpl;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Scanner;
