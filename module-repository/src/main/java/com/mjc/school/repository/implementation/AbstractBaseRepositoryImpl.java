@@ -54,15 +54,11 @@ public abstract class AbstractBaseRepositoryImpl<T extends BaseEntity<Long>> imp
         return itemById.isPresent();
     }
 
-    @Transactional
-    public void insert(T entity) {
-        getEntityManager().merge(entity);
-    }
-
-    protected abstract Class getEntityClass();
+    protected abstract Class<T> getEntityClass();
     protected abstract EntityManager getEntityManager();
-    protected String getTableName() {
-        var classStr = getEntityClass().toString();
-        return classStr.split(" ")[1];
-    }
+    protected abstract String getTableName();
+//    {
+//        var classStr = getEntityClass().toString();
+//        return classStr.split(" ")[1];
+//    }
 }

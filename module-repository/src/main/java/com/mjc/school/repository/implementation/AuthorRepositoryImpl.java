@@ -1,7 +1,6 @@
 package com.mjc.school.repository.implementation;
 
 import com.mjc.school.repository.AuthorRepository;
-import com.mjc.school.repository.dataloader.DataLoader;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -26,11 +25,16 @@ public class AuthorRepositoryImpl extends AbstractBaseRepositoryImpl<AuthorEntit
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<AuthorEntity> getEntityClass() {
         return AuthorEntity.class;
     }
 
     protected EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    protected String getTableName() {
+        return "author";
     }
 }

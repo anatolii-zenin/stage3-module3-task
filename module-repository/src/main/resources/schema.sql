@@ -1,21 +1,32 @@
-CREATE SCHEMA IF NOT EXISTS test;
-SET SCHEMA test;
-
-CREATE TABLE IF NOT EXISTS author (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(25) NOT NULL,
-    createDate DATE,
-    lastUpdateDate DATE,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE IF NOT EXISTS news (
-    id BIGINT NOT NULL AUTO_INCREMENT,
-    title VARCHAR(50),
-    content VARCHAR(355),
-    createDate DATE,
-    lastUpdateDate DATE,
-    author_id BIGINT NOT NULL,
-    PRIMARY KEY (id),
-    FOREIGN KEY (author_id) REFERENCES author (id) ON DELETE CASCADE
-);
+--CREATE SCHEMA IF NOT EXISTS test;
+--SET SCHEMA test;
+--
+--CREATE TABLE IF NOT EXISTS author (
+--    id BIGINT NOT NULL AUTO_INCREMENT,
+--    name VARCHAR(25) NOT NULL,
+--    createDate TIMESTAMP,
+--    lastUpdateDate TIMESTAMP,
+--    PRIMARY KEY (id)
+--);
+--
+--CREATE TABLE IF NOT EXISTS news (
+--    id BIGINT NOT NULL AUTO_INCREMENT,
+--    title VARCHAR(50),
+--    content VARCHAR(355),
+--    createDate TIMESTAMP,
+--    lastUpdateDate TIMESTAMP,
+--    author_id BIGINT NOT NULL,
+--    tag_id BIGINT,
+--    PRIMARY KEY (id),
+--    FOREIGN KEY (author_id) REFERENCES author (id) ON DELETE CASCADE,
+--    FOREIGN KEY (tag_id) REFERENCES tag (id)
+--);
+--
+--CREATE TABLE IF NOT EXISTS tag (
+--    id BIGINT NOT NULL AUTO_INCREMENT,
+--    name VARCHAR(50),
+--    createDate TIMESTAMP,
+--    lastUpdateDate TIMESTAMP,
+--    news_id BIGINT NOT NULL,
+--    PRIMARY KEY (id)
+--);

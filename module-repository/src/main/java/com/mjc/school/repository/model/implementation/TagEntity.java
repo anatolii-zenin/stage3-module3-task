@@ -14,22 +14,17 @@ import java.util.Set;
 
 @Setter
 @Getter
-@Entity(name = "news")
-public class NewsEntity implements BaseEntity<Long> {
+@Entity
+@OnDelete(action = OnDeleteAction.CASCADE)
+public class TagEntity implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title;
-    @Column(length = 355)
-    private String content;
+    private String name;
     @CreationTimestamp
     private LocalDateTime createDate;
     @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private AuthorEntity author;
-//    @ManyToMany
-//    private Set<TagEntity> tags;
+    @ManyToMany
+    private Set<NewsEntity> news;
 }

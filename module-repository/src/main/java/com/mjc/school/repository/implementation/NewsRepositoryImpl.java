@@ -21,20 +21,23 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     @Transactional
     public NewsEntity update(NewsEntity entity) {
         NewsEntity dbEntity = (NewsEntity) getEntityManager().find(getEntityClass(), entity.getId());
-        dbEntity.setTitle(entity.getTitle());
-        dbEntity.setContent(entity.getContent());
-        dbEntity.setAuthorId(entity.getAuthorId());
-        getEntityManager().merge(dbEntity);
+        entity.setCreateDate(dbEntity.getCreateDate());
+        getEntityManager().merge(entity);
         return (NewsEntity) getEntityManager().find(getEntityClass(), dbEntity.getId());
     }
 
     @Override
-    protected Class getEntityClass() {
+    protected Class<NewsEntity> getEntityClass() {
         return NewsEntity.class;
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    @Override
+    protected String getTableName() {
+        return "news";
     }
 }
