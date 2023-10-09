@@ -23,6 +23,10 @@ public class ReadNewsById implements Command {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter ID:");
         Long id = Long.parseLong(in.nextLine());
-        System.out.println(newsController.readById(id).toString());
+        var result = newsController.readById(id);
+        if (result != null)
+            System.out.println(result);
+        else
+            System.out.println("News with ID " + id + " does not exist.");
     }
 }

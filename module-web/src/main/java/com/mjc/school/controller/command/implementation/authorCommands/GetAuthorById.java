@@ -23,6 +23,10 @@ public class GetAuthorById implements Command {
         Scanner in = new Scanner(System.in);
         System.out.println("Enter ID:");
         Long id = Long.parseLong(in.nextLine());
-        System.out.println(authorController.readById(id).toString());
+        var result = authorController.readById(id);
+        if (result != null)
+            System.out.println(result);
+        else
+            System.out.println("Author with ID " + id + " does not exist.");
     }
 }
