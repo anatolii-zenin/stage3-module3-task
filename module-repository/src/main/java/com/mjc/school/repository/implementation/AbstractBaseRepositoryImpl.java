@@ -22,14 +22,14 @@ public abstract class AbstractBaseRepositoryImpl<T extends BaseEntity<Long>> imp
     @Override
     @Transactional(readOnly = true)
     public Optional<T> readById(Long id) {
-        return Optional.ofNullable((T) getEntityManager().find(getEntityClass(), id));
+        return Optional.ofNullable(getEntityManager().find(getEntityClass(), id));
     }
 
     @Override
     @Transactional
     public T create(T entity) {
         var mergedEntity = getEntityManager().merge(entity);
-        return  (T) getEntityManager().find(getEntityClass(), mergedEntity.getId());
+        return  getEntityManager().find(getEntityClass(), mergedEntity.getId());
     }
 
     @Override
@@ -57,8 +57,4 @@ public abstract class AbstractBaseRepositoryImpl<T extends BaseEntity<Long>> imp
     protected abstract Class<T> getEntityClass();
     protected abstract EntityManager getEntityManager();
     protected abstract String getTableName();
-//    {
-//        var classStr = getEntityClass().toString();
-//        return classStr.split(" ")[1];
-//    }
 }

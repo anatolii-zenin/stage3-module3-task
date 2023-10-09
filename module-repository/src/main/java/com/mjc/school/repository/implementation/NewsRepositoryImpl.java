@@ -15,15 +15,15 @@ import javax.persistence.PersistenceContext;
 public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         implements NewsRepository {
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     @Override
     @Transactional
     public NewsEntity update(NewsEntity entity) {
-        NewsEntity dbEntity = (NewsEntity) getEntityManager().find(getEntityClass(), entity.getId());
+        NewsEntity dbEntity = getEntityManager().find(getEntityClass(), entity.getId());
         entity.setCreateDate(dbEntity.getCreateDate());
         getEntityManager().merge(entity);
-        return (NewsEntity) getEntityManager().find(getEntityClass(), dbEntity.getId());
+        return getEntityManager().find(getEntityClass(), dbEntity.getId());
     }
 
     @Override

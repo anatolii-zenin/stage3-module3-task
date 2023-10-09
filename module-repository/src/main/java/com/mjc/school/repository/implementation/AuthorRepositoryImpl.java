@@ -19,9 +19,10 @@ public class AuthorRepositoryImpl extends AbstractBaseRepositoryImpl<AuthorEntit
     @Override
     @Transactional
     public AuthorEntity update(AuthorEntity entity) {
-        AuthorEntity dbEntity = (AuthorEntity) getEntityManager().find(getEntityClass(), entity.getId());
-        dbEntity.setName(entity.getName());
-        return (AuthorEntity) getEntityManager().find(getEntityClass(), dbEntity.getId());
+        AuthorEntity dbEntity = getEntityManager().find(getEntityClass(), entity.getId());
+        entity.setCreateDate(dbEntity.getCreateDate());
+        getEntityManager().merge(entity);
+        return getEntityManager().find(getEntityClass(), dbEntity.getId());
     }
 
     @Override
