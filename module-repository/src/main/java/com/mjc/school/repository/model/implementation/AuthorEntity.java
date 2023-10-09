@@ -4,24 +4,24 @@ import com.mjc.school.repository.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
-@Entity
-@Table(name = "author")
+@Entity(name = "author")
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class AuthorEntity implements BaseEntity<Long> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
+    private LocalDateTime createDate;
     @UpdateTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 }
