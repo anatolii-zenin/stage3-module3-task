@@ -1,14 +1,15 @@
 package com.mjc.school.controller.implementation;
 
 import com.mjc.school.controller.NewsController;
+import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.NewsDTOReq;
 import com.mjc.school.service.dto.NewsDTOResp;
-import com.mjc.school.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
+
 
 @Controller
 @Scope("singleton")

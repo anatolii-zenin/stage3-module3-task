@@ -1,7 +1,6 @@
 package com.mjc.school.service;
 
 import com.mjc.school.service.dto.AuthorDTOReq;
-import com.mjc.school.service.dto.implementation.AuthorDTOReqImpl;
 import com.mjc.school.service.implementation.AuthorServiceImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -28,7 +27,7 @@ public class AuthorServiceTests {
         String authorName2 = "testAuthor2";
 
         authorService = context.getBean(AuthorServiceImpl.class);
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName1);
         authorService.create(authorReq);
         authorReq.setName(authorName2);
@@ -48,13 +47,13 @@ public class AuthorServiceTests {
         String authorName = "testAuthor";
         String authorNameUpdated = "testAuthorUpdated";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName);
         var id = authorService.create(authorReq).getId();
         var entry = authorService.readById(id);
         assertEquals("Created entry is not as expected", authorName, entry.getName());
 
-        authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorNameUpdated);
         authorReq.setId(id);
         authorService.update(authorReq);
@@ -68,7 +67,7 @@ public class AuthorServiceTests {
 
         String authorName = "testAuthor";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName);
         var id = authorService.create(authorReq).getId();
         var entry = authorService.readById(id);

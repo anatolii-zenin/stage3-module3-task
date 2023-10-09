@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
-@Getter
 @Setter
-@Component("newsDtoReq")
-public class NewsDTOReq {
+@Getter
+@Component("tagDtoReqImpl")
+public class TagDTOReq {
     protected Long id;
-    protected String title;
-    protected String content;
-    protected Long authorId;
+    protected String name;
 }

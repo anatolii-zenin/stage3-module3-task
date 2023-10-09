@@ -1,6 +1,5 @@
-package com.mjc.school.service.dto.implementation;
+package com.mjc.school.service.dto;
 
-import com.mjc.school.service.dto.AuthorDTOResp;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
@@ -11,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Setter
 @Getter
 @Component
-public class AuthorDTORespImpl extends AuthorDTOReqImpl implements AuthorDTOResp {
+public class TagDTOResp extends AuthorDTOReq {
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";

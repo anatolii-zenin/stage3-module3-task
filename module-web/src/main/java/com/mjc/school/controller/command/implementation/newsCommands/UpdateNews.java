@@ -2,7 +2,7 @@ package com.mjc.school.controller.command.implementation.newsCommands;
 
 import com.mjc.school.controller.NewsController;
 import com.mjc.school.controller.command.Command;
-import com.mjc.school.service.dto.implementation.NewsDTOReqImpl;
+import com.mjc.school.service.dto.NewsDTOReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +30,7 @@ public class UpdateNews implements Command {
         var content = in.nextLine();
         System.out.println("Enter author ID:");
         Long authorID = Long.parseLong(in.nextLine());
-        var req = new NewsDTOReqImpl();
+        var req = new NewsDTOReq();
         req.setId(newsID);
         req.setTitle(title);
         req.setContent(content);

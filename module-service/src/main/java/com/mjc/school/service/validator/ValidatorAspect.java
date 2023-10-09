@@ -1,7 +1,7 @@
 package com.mjc.school.service.validator;
 
-import com.mjc.school.service.dto.implementation.AuthorDTOReqImpl;
-import com.mjc.school.service.dto.implementation.NewsDTOReqImpl;
+import com.mjc.school.service.dto.AuthorDTOReq;
+import com.mjc.school.service.dto.NewsDTOReq;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -22,9 +22,9 @@ public class ValidatorAspect {
         System.out.println("Validating DTO request input...");
         var objClass = arg.getClass();
         Validator validator;
-        if (objClass.equals(NewsDTOReqImpl.class))
+        if (objClass.equals(NewsDTOReq.class))
             validator = applicationContext.getBean(NewsValidator.class);
-        else if (objClass.equals(AuthorDTOReqImpl.class))
+        else if (objClass.equals(AuthorDTOReq.class))
             validator = applicationContext.getBean(AuthorValidator.class);
         else
             throw new RuntimeException("Validator unable to process class: " + objClass);

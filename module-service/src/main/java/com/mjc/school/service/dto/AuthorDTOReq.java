@@ -1,8 +1,13 @@
 package com.mjc.school.service.dto;
 
-public interface AuthorDTOReq {
-    Long getId();
-    void setId(Long id);
-    String getName();
-    void setName(String name);
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
+
+@Setter
+@Getter
+@Component("authorDtoReq")
+public class AuthorDTOReq {
+    protected Long id;
+    protected String name;
 }

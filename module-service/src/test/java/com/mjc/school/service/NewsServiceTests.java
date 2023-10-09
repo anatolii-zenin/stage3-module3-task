@@ -2,8 +2,6 @@ package com.mjc.school.service;
 
 import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.NewsDTOReq;
-import com.mjc.school.service.dto.implementation.AuthorDTOReqImpl;
-import com.mjc.school.service.dto.implementation.NewsDTOReqImpl;
 import com.mjc.school.service.implementation.AuthorServiceImpl;
 import com.mjc.school.service.implementation.NewsServiceImpl;
 import org.junit.jupiter.api.*;
@@ -38,13 +36,13 @@ public class NewsServiceTests {
         String newsContent1 = "testContent1";
         String newsContent2 = "testContent2";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName1);
         var authorId1 = authorService.create(authorReq).getId();
         authorReq.setName(authorName2);
         var authorId2 = authorService.create(authorReq).getId();
 
-        NewsDTOReq newsReq = context.getBean("newsDtoReqImpl", NewsDTOReqImpl.class);
+        NewsDTOReq newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
         newsReq.setAuthorId(1L);
         newsReq.setContent(newsContent1);
         newsReq.setTitle(newsTitle1);
@@ -77,13 +75,13 @@ public class NewsServiceTests {
         String newsContent = "testContent";
         String newsContentUpdated = "testContentUpdated";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName);
         var authorId = authorService.create(authorReq).getId();
         var authorEntry = authorService.readById(authorId);
         assertEquals("Created entry is not as expected", authorName, authorEntry.getName());
 
-        NewsDTOReq newsReq = context.getBean("newsDtoReqImpl", NewsDTOReqImpl.class);
+        NewsDTOReq newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
         newsReq.setAuthorId(1L);
         newsReq.setContent(newsContent);
         newsReq.setTitle(newsTitle);
@@ -95,7 +93,7 @@ public class NewsServiceTests {
         assertEquals("Entry content is not as expected", newsContent, newsEntry.getContent());
         assertEquals("Entry author is not as expected", authorId, newsEntry.getAuthorId());
 
-        newsReq = context.getBean("newsDtoReqImpl", NewsDTOReqImpl.class);
+        newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
         newsReq.setTitle(newsTitleUpdated);
         newsReq.setContent(newsContentUpdated);
         newsReq.setId(newsId);
@@ -118,13 +116,13 @@ public class NewsServiceTests {
         String newsTitle = "testTitle";
         String newsContent = "testContent";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName);
         var authorId = authorService.create(authorReq).getId();
         var authorEntry = authorService.readById(authorId);
         assertEquals("Created entry is not as expected", authorName, authorEntry.getName());
 
-        NewsDTOReq newsReq = context.getBean("newsDtoReqImpl", NewsDTOReqImpl.class);
+        NewsDTOReq newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
         newsReq.setAuthorId(1L);
         newsReq.setContent(newsContent);
         newsReq.setTitle(newsTitle);
@@ -152,13 +150,13 @@ public class NewsServiceTests {
         String newsTitle = "testTitle";
         String newsContent = "testContent";
 
-        AuthorDTOReq authorReq = context.getBean("authorDtoReqImpl", AuthorDTOReqImpl.class);
+        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
         authorReq.setName(authorName);
         var authorId = authorService.create(authorReq).getId();
         var authorEntry = authorService.readById(authorId);
         assertEquals("Created entry is not as expected", authorName, authorEntry.getName());
 
-        NewsDTOReq newsReq = context.getBean("newsDtoReqImpl", NewsDTOReqImpl.class);
+        NewsDTOReq newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
         newsReq.setAuthorId(1L);
         newsReq.setContent(newsContent);
         newsReq.setTitle(newsTitle);

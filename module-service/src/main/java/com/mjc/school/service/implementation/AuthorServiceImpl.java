@@ -3,7 +3,6 @@ package com.mjc.school.service.implementation;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.AuthorDTOResp;
-import com.mjc.school.service.dto.implementation.AuthorDTOReqImpl;
 import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.service.AuthorService;
 import org.springframework.context.annotation.Scope;
@@ -15,7 +14,7 @@ public class AuthorServiceImpl extends BaseServiceImpl<AuthorDTOReq, AuthorDTORe
         implements AuthorService {
     @Override
     protected AuthorEntity dtoToEntity(AuthorDTOReq authorDTOReq) {
-        return mapper.authorReqToEntity((AuthorDTOReqImpl) authorDTOReq);
+        return mapper.authorReqToEntity(authorDTOReq);
     }
 
     @Override

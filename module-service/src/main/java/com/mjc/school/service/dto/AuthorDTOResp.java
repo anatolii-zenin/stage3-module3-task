@@ -1,10 +1,24 @@
 package com.mjc.school.service.dto;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.stereotype.Component;
 
-public interface AuthorDTOResp extends AuthorDTOReq {
-    void setCreateDate(LocalDateTime localDateTime);
-    LocalDateTime getCreateDate();
-    void setLastUpdateDate(LocalDateTime lastUpdateDate);
-    LocalDateTime getLastUpdateDate();
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+@Setter
+@Getter
+@Component
+public class AuthorDTOResp extends AuthorDTOReq {
+    private LocalDateTime createDate;
+    private LocalDateTime lastUpdateDate;
+    private static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";
+
+    @Override
+    public String toString() {
+        return "[" + id + "] " + name + ". created: " +
+                createDate.format(DateTimeFormatter.ofPattern(dateFormatPattern)) + ". modified: " +
+                lastUpdateDate.format(DateTimeFormatter.ofPattern(dateFormatPattern));
+    }
 }
