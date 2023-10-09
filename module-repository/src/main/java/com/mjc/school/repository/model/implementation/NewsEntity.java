@@ -30,6 +30,7 @@ public class NewsEntity implements BaseEntity<Long> {
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private AuthorEntity author;
-//    @ManyToMany
-//    private Set<TagEntity> tags;
+    @ManyToMany
+    @JoinColumn(name = "tag_id", referencedColumnName = "id")
+    private Set<TagEntity> tags;
 }
