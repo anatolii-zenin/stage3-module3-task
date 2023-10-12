@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Setter
 @Getter
-@Component("tagDtoReqImpl")
+@Component("tagDtoReq")
 public class TagDTOReq {
-    protected Long id;
-    protected String name;
+    private Long id;
+    private String name;
 }
