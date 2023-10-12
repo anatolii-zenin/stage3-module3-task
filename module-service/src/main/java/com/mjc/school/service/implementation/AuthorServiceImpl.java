@@ -5,6 +5,8 @@ import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.AuthorDTOResp;
 import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.service.AuthorService;
+import com.mjc.school.service.mapper.AuthorDTOMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,10 @@ import org.springframework.stereotype.Service;
 @Scope("singleton")
 public class AuthorServiceImpl extends BaseServiceImpl<AuthorDTOReq, AuthorDTOResp, AuthorEntity, AuthorRepository>
         implements AuthorService {
+    @Autowired
+    AuthorRepository authorRepository;
+    @Autowired
+    AuthorDTOMapper mapper;
     @Override
     protected AuthorEntity dtoToEntity(AuthorDTOReq authorDTOReq) {
         return mapper.authorReqToEntity(authorDTOReq);
@@ -19,10 +25,13 @@ public class AuthorServiceImpl extends BaseServiceImpl<AuthorDTOReq, AuthorDTORe
 
     @Override
     protected AuthorDTOResp entityToDto(AuthorEntity authorEntity) {
-        return mapper.authorToAuthorDto(authorEntity);
+        return mapper.authorToDtoResp(authorEntity);
     }
 
-     public AuthorServiceImpl(AuthorRepository authorRepository) {
-        this.repo = authorRepository;
+    @Override
+    protected AuthorRepository getRepo() {
+        return authorRepository;
     }
+
+
 }

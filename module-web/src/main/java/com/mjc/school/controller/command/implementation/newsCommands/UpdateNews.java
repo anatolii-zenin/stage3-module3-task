@@ -34,7 +34,7 @@ public class UpdateNews implements Command {
         req.setId(newsID);
         req.setTitle(title);
         req.setContent(content);
-        req.setAuthorId(authorID);
+        req.getAuthor().setId(authorID);
         var updatedNews = newsController.update(req);
         System.out.println(updatedNews.toString());
     }

@@ -31,7 +31,7 @@ public class CreateNews implements Command {
         var req = new NewsDTOReq();
         req.setTitle(title);
         req.setContent(content);
-        req.setAuthorId(authorID);
+        req.getAuthor().setId(authorID);
         var newNews = newsController.create(req);
         System.out.println(newNews.toString());
     }

@@ -27,8 +27,8 @@ public class NewsValidator implements Validator<NewsDTOReq> {
         if (!validateRange(req.getContent().length(), contentLengthFrom, contentLengthTo))
             errors.append("Title length should be between " + contentLengthFrom + " and " +
                     contentLengthTo + " characters. Provided length: " + req.getContent().length() + ".\n");
-        if (authorService.readById(req.getAuthorId()) == null)
-            errors.append("Author with id " + req.getAuthorId() + " does not exist.\n");
+        if (authorService.readById(req.getAuthor().getId()) == null)
+            errors.append("Author with id " + req.getAuthor().getId() + " does not exist.\n");
         if (errors.length() > 0)
             throw new RuntimeException(errors.toString());
         return true;

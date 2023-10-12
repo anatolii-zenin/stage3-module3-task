@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component("authorDtoReq")
 public class AuthorDTOReq {
-    protected Long id;
-    protected String name;
+    private Long id;
+    private String name;
 }

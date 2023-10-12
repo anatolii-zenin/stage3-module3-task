@@ -9,8 +9,10 @@ import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
-@Component
-public class AuthorDTOResp extends AuthorDTOReq {
+@Component("authorDtoResp")
+public class AuthorDTOResp {
+    private Long id;
+    private String name;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
     private static final String dateFormatPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS";

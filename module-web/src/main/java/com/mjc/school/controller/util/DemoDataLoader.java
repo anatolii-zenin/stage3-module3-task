@@ -43,7 +43,7 @@ public class DemoDataLoader {
             NewsDTOReq news = (NewsDTOReq) applicationContext.getBean("newsDtoReq");
             news.setTitle(titleLines.get(i));
             news.setContent(contentLines.get(i));
-            news.setAuthorId((long) i+1);
+            news.getAuthor().setId((long) i+1);
             var id = newsService.create(news);
             System.out.println(id);
         }
