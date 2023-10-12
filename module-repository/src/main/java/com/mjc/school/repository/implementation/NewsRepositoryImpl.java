@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Scope("singleton")
@@ -39,5 +41,31 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     @Override
     protected String getTableName() {
         return "news";
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<NewsEntity> readAll() {
+        var findAll = getEntityManager().createQuery("" +
+                "SELECT a FROM " + getTableName() + " a " +
+                "LEFT JOIN FETCH a.tags"
+        );
+        return findAll.getResultList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<NewsEntity> readById(Long id) {
+        var findOne = getEntityManager().createQuery("" +
+                "SELECT a FROM " + getTableName() + " a " +
+                "LEFT JOIN FETCH a.tags " +
+                "WHERE a.id=:id"
+        );
+        findOne.setParameter("id", id);
+        var findList = findOne.getResultList();
+        if (findList.size() == 0)
+            return Optional.empty();
+        var result = (NewsEntity) findList.get(0);
+        return Optional.ofNullable(result);
     }
 }

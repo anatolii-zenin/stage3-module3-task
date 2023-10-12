@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,4 +22,6 @@ public class AuthorEntity implements BaseEntity<Long> {
     private LocalDateTime createDate;
     @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL})
+    private List<NewsEntity> news;
 }
