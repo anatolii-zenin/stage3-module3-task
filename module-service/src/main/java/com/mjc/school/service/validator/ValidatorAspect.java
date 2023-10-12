@@ -20,17 +20,21 @@ public class ValidatorAspect {
 
     @Before("validate() && args(arg)")
     public void validateReq(Object arg) {
-        var objClass = arg.getClass();
-        Validator validator;
-        if (objClass.equals(NewsDTOReq.class))
-            validator = applicationContext.getBean(NewsValidator.class);
-        else if (objClass.equals(AuthorDTOReq.class))
-            validator = applicationContext.getBean(AuthorValidator.class);
-        else if (objClass.equals(TagDTOReq.class))
-            return;
+        var argClass = arg.getClass();
+        boolean success = false;
+        if (argClass.equals(NewsDTOReq.class)) {
+            var validator = applicationContext.getBean(NewsValidator.class);
+            success = validator.validate((NewsDTOReq) arg);
+        }
+        else if (argClass.equals(AuthorDTOReq.class)) {
+            var validator = applicationContext.getBean(AuthorValidator.class);
+            success = validator.validate((AuthorDTOReq) arg);
+        }
+        else if (argClass.equals(TagDTOReq.class))
+            return; //TODO: implement a validator for tags
         else
-            throw new RuntimeException("Validator unable to process class: " + objClass);
-        if (!validator.validate(arg))
+            throw new RuntimeException("Validator unable to process class: " + argClass);
+        if (!success)
             throw new RuntimeException("Validation failed");
     }
 
