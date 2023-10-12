@@ -2,8 +2,6 @@ package com.mjc.school.service.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,8 +9,6 @@ import java.util.List;
 
 @Setter
 @Getter
-@Component
-@Qualifier("newsResp")
 public class NewsDTOResp {
     private Long id;
     private String title;

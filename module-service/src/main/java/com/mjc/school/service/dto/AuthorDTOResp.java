@@ -2,14 +2,12 @@ package com.mjc.school.service.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Setter
 @Getter
-@Component("authorDtoResp")
 public class AuthorDTOResp {
     private Long id;
     private String name;

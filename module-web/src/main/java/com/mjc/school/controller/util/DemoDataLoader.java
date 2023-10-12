@@ -5,7 +5,6 @@ import com.mjc.school.service.NewsService;
 import com.mjc.school.service.dto.AuthorDTOReq;
 import com.mjc.school.service.dto.NewsDTOReq;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +20,11 @@ public class DemoDataLoader {
     @Autowired
     NewsService newsService;
 
-    @Autowired
-    ApplicationContext applicationContext;
-
     @Transactional
     public void populateAuthors() {
         var authorLines = readAuthorLines();
         for (String authorLine : authorLines) {
-            AuthorDTOReq author = (AuthorDTOReq) applicationContext.getBean("authorDtoReq");
+            var author = new AuthorDTOReq();
             author.setName(authorLine);
 
             authorService.create(author);
@@ -40,7 +36,7 @@ public class DemoDataLoader {
         var titleLines = readTitleLines();
         var contentLines = readContentLines();
         for (int i=0; i < titleLines.size(); i++) {
-            NewsDTOReq news = (NewsDTOReq) applicationContext.getBean("newsDtoReq");
+            var news = new NewsDTOReq();
             news.setTitle(titleLines.get(i));
             news.setContent(contentLines.get(i));
             news.getAuthor().setId((long) i+1);

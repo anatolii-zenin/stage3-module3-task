@@ -88,7 +88,7 @@ public class NewsServiceTests {
         assertEquals("Entry content is not as expected", newsContent, newsEntry.getContent());
         assertEquals("Entry author is not as expected", authorId, newsEntry.getAuthor().getId());
 
-        var newsReq = context.getBean("newsDtoReq", NewsDTOReq.class);
+        var newsReq = new NewsDTOReq();
         newsReq.setTitle(newsTitleUpdated);
         newsReq.setContent(newsContentUpdated);
         newsReq.setId(newsId);
@@ -158,13 +158,13 @@ public class NewsServiceTests {
     }
 
     private Long createAuthor(String name) {
-        AuthorDTOReq authorReq = context.getBean("authorDtoReq", AuthorDTOReq.class);
+        var authorReq = new AuthorDTOReq();
         authorReq.setName(name);
         return authorService.create(authorReq).getId();
     }
 
     private Long createNews(Long authorId, String newsTitle, String newsContent, List<TagDTOReq> tags) {
-        NewsDTOReq newsReq = context.getBean(NewsDTOReq.class);
+        var newsReq = new NewsDTOReq();
         newsReq.getAuthor().setId(authorId);
         newsReq.setContent(newsContent);
         newsReq.setTitle(newsTitle);
@@ -173,7 +173,7 @@ public class NewsServiceTests {
     }
 
     private Long createNews(Long authorId, String newsTitle, String newsContent) {
-        NewsDTOReq newsReq = context.getBean( NewsDTOReq.class);
+        var newsReq = new NewsDTOReq();
         newsReq.getAuthor().setId(authorId);
         newsReq.setContent(newsContent);
         newsReq.setTitle(newsTitle);
@@ -181,7 +181,7 @@ public class NewsServiceTests {
     }
 
     private Long createTag(String name) {
-        TagDTOReq tagReq = context.getBean(TagDTOReq.class);
+        var tagReq = new TagDTOReq();
         tagReq.setName(name);
         return tagService.create(tagReq).getId();
     }
