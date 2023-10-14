@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetAllAuthors implements Command {
+public class ReadAllAuthors implements Command {
     @Autowired
     private AuthorController authorController;
-    private final String name = "Get All Authors";
+    private final String name = "Read All Authors";
 
     @Override
     public String getName() {

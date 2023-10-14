@@ -8,10 +8,10 @@ import org.springframework.stereotype.Component;
 import java.util.Scanner;
 
 @Component
-public class GetAuthorById implements Command {
+public class ReadAuthorById implements Command {
     @Autowired
     private AuthorController authorController;
-    private final String name = "Get Author by ID";
+    private final String name = "Read Author by ID";
 
     @Override
     public String getName() {

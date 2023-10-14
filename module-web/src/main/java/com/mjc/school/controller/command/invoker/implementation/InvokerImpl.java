@@ -3,6 +3,7 @@ package com.mjc.school.controller.command.invoker.implementation;
 import com.mjc.school.controller.command.Command;
 import com.mjc.school.controller.command.implementation.authorCommands.*;
 import com.mjc.school.controller.command.implementation.newsCommands.*;
+import com.mjc.school.controller.command.implementation.tagCommands.*;
 import com.mjc.school.controller.command.implementation.utilCommands.LoadDemoData;
 import com.mjc.school.controller.command.invoker.Invoker;
 import org.springframework.context.annotation.Scope;
@@ -32,26 +33,56 @@ public class InvokerImpl implements Invoker {
     InvokerImpl(
             CreateAuthor createAuthor,
             CreateNews createNews,
+            CreateTag createTag,
+
             DeleteAuthor deleteAuthor,
             DeleteNews deleteNews,
-            GetAllAuthors getAllAuthors,
-            GetAllNews getAllNews,
-            GetAuthorById getAuthorById,
+            DeleteTag deleteTag,
+
+            ReadAllAuthors readAllAuthors,
+            ReadAllNews readAllNews,
+            ReadAllTags readAllTags,
+
+            ReadAuthorById readAuthorById,
+            ReadTagById readTagById,
             ReadNewsById readNewsById,
+
+            ReadAuthorByNewsId readAuthorByNewsId,
+            ReadTagByNewsId readTagByNewsId,
+
             UpdateAuthor updateAuthor,
             UpdateNews updateNews,
+            UpdateTag updateTag,
+
+            ReadNewsByCriteria readNewsByCriteria,
+
             LoadDemoData loadDemoData
     ) {
         commandList.add(createAuthor);
         commandList.add(createNews);
+        commandList.add(createTag);
+
         commandList.add(deleteAuthor);
         commandList.add(deleteNews);
-        commandList.add(getAllAuthors);
-        commandList.add(getAllNews);
-        commandList.add(getAuthorById);
+        commandList.add(deleteTag);
+
+        commandList.add(readAllAuthors);
+        commandList.add(readAllNews);
+        commandList.add(readAllTags);
+
+        commandList.add(readAuthorById);
         commandList.add(readNewsById);
+        commandList.add(readTagById);
+
+        commandList.add(readAuthorByNewsId);
+        commandList.add(readTagByNewsId);
+
         commandList.add(updateAuthor);
         commandList.add(updateNews);
+        commandList.add(updateTag);
+
+        commandList.add(readNewsByCriteria);
+
         commandList.add(loadDemoData);
     }
 }

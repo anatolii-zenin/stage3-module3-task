@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GetAllNews implements Command {
+public class ReadAllNews implements Command {
     @Autowired
     private NewsController newsController;
-    private final String name = "Get All News";
+    private final String name = "Read All News";
 
      @Override
     public String getName() {
