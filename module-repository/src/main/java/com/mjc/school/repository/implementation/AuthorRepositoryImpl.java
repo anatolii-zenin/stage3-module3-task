@@ -4,7 +4,6 @@ import com.mjc.school.repository.AuthorRepository;
 import com.mjc.school.repository.model.implementation.AuthorEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +16,6 @@ public class AuthorRepositoryImpl extends AbstractBaseRepositoryImpl<AuthorEntit
     EntityManager entityManager;
 
     @Override
-    @Transactional
     public AuthorEntity update(AuthorEntity entity) {
         AuthorEntity dbEntity = getEntityManager().find(getEntityClass(), entity.getId());
         entity.setCreateDate(dbEntity.getCreateDate());

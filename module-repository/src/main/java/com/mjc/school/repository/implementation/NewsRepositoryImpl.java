@@ -4,7 +4,6 @@ import com.mjc.school.repository.NewsRepository;
 import com.mjc.school.repository.model.implementation.NewsEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 @Repository
 @Scope("singleton")
-@Transactional
 public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         implements NewsRepository {
     @PersistenceContext

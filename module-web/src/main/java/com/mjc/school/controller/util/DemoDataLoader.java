@@ -8,7 +8,6 @@ import com.mjc.school.service.dto.NewsDTOReq;
 import com.mjc.school.service.dto.TagDTOReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +24,6 @@ public class DemoDataLoader {
     @Autowired
     TagService tagService;
 
-    @Transactional
     public void populateAuthors() {
         var authorLines = readAuthorLines();
         for (String authorLine : authorLines) {
@@ -46,7 +44,6 @@ public class DemoDataLoader {
         }
     }
 
-    @Transactional
     public void populateNews() {
         var titleLines = readTitleLines();
         var contentLines = readContentLines();
