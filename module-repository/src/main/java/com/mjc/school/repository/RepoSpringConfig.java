@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan
-@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class RepoSpringConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
