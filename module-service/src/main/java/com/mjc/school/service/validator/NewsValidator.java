@@ -2,6 +2,7 @@ package com.mjc.school.service.validator;
 
 import com.mjc.school.service.AuthorService;
 import com.mjc.school.service.NewsService;
+import com.mjc.school.service.TagService;
 import com.mjc.school.service.dto.NewsDTOReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,8 @@ public class NewsValidator implements Validator<NewsDTOReq> {
     private NewsService newsService;
     @Autowired
     private AuthorService authorService;
+    @Autowired
+    private TagService tagService;
     private final int titleLengthFrom = 3;
     private final int titleLengthTo = 50;
     private final int contentLengthFrom = 3;
@@ -29,6 +32,9 @@ public class NewsValidator implements Validator<NewsDTOReq> {
                     contentLengthTo + " characters. Provided length: " + req.getContent().length() + ".\n");
         if (authorService.readById(req.getAuthor().getId()) == null)
             errors.append("Author with id " + req.getAuthor().getId() + " does not exist.\n");
+        for (var tag : req.getTags())
+            if (tagService.readById(tag.getId()) == null)
+                errors.append("Tag with id " + tag.getId() + " does not exist.\n");
         if (errors.length() > 0)
             throw new RuntimeException(errors.toString());
         return true;

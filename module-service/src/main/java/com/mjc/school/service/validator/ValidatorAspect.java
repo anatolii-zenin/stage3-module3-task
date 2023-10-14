@@ -31,7 +31,10 @@ public class ValidatorAspect {
             success = validator.validate((AuthorDTOReq) arg);
         }
         else if (argClass.equals(TagDTOReq.class))
-            return; //TODO: implement a validator for tags
+        {
+            var validator = applicationContext.getBean(TagValidator.class);
+            success = validator.validate((TagDTOReq) arg);
+        }
         else
             throw new RuntimeException("Validator unable to process class: " + argClass);
         if (!success)
