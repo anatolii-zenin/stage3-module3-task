@@ -3,8 +3,6 @@ package com.mjc.school.repository.model.implementation;
 import com.mjc.school.repository.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -20,9 +18,7 @@ public class NewsEntity implements BaseEntity<Long> {
     private String title;
     @Column(length = 355)
     private String content;
-    @CreationTimestamp
     private LocalDateTime createDate;
-    @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
@@ -34,4 +30,15 @@ public class NewsEntity implements BaseEntity<Long> {
         inverseJoinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id")
     )
     private List<TagEntity> tags;
+
+    @PrePersist
+    public void prePersist() {
+        createDate = LocalDateTime.now();
+        lastUpdateDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        lastUpdateDate = LocalDateTime.now();
+    }
 }

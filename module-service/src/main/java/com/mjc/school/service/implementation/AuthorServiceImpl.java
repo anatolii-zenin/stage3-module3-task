@@ -9,9 +9,11 @@ import com.mjc.school.service.mapper.AuthorDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Scope("singleton")
+@Transactional
 public class AuthorServiceImpl extends BaseServiceImpl<AuthorDTOReq, AuthorDTOResp, AuthorEntity, AuthorRepository>
         implements AuthorService {
     @Autowired

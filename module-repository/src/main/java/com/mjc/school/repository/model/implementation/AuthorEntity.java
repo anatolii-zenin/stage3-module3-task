@@ -3,8 +3,6 @@ package com.mjc.school.repository.model.implementation;
 import com.mjc.school.repository.model.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,10 +16,19 @@ public class AuthorEntity implements BaseEntity<Long> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @CreationTimestamp
     private LocalDateTime createDate;
-    @UpdateTimestamp
     private LocalDateTime lastUpdateDate;
     @OneToMany(mappedBy = "author", cascade = {CascadeType.ALL})
     private List<NewsEntity> news;
+
+    @PrePersist
+    public void prePersist() {
+        createDate = LocalDateTime.now();
+        lastUpdateDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        lastUpdateDate = LocalDateTime.now();
+    }
 }

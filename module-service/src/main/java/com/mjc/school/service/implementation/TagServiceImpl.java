@@ -9,9 +9,11 @@ import com.mjc.school.service.mapper.TagDTOMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Scope("singleton")
+@Transactional
 public class TagServiceImpl extends BaseServiceImpl<TagDTOReq, TagDTOResp, TagEntity, TagRepository>
         implements TagService {
     @Autowired

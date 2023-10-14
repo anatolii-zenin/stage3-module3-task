@@ -2,19 +2,14 @@ package com.mjc.school.repository;
 
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaDialect;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan
-@EnableTransactionManagement
 public class RepoSpringConfig {
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
@@ -37,14 +32,5 @@ public class RepoSpringConfig {
         dataSource.setUsername("sa");
         dataSource.setPassword("");
         return dataSource;
-    }
-
-    @Bean
-    public PlatformTransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
-        JpaTransactionManager transactionManager
-                = new JpaTransactionManager();
-        transactionManager.setDataSource(dataSource());
-        transactionManager.setEntityManagerFactory(entityManagerFactory);
-        return transactionManager;
     }
 }

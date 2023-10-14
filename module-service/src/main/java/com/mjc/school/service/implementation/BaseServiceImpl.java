@@ -4,10 +4,12 @@ import com.mjc.school.repository.BaseRepository;
 import com.mjc.school.repository.model.BaseEntity;
 import com.mjc.school.service.BaseService;
 import com.mjc.school.service.validator.Validate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 public abstract class BaseServiceImpl<Req, Resp, Entity extends BaseEntity<Long>,
         Repository extends BaseRepository<Entity, Long>>
         implements BaseService<Req, Resp, Long> {
@@ -20,10 +22,7 @@ public abstract class BaseServiceImpl<Req, Resp, Entity extends BaseEntity<Long>
     @Override
     public Resp readById(Long id) {
         var item = getRepo().readById(id);
-        if (item.isPresent())
-            return entityToDto(getRepo().readById(id).get());
-        else
-            return null;
+        return item.map(this::entityToDto).orElse(null);
     }
 
     @Override

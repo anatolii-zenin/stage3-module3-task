@@ -24,8 +24,7 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     @PersistenceContext
     EntityManager entityManager;
 
-    @Override
-    @Transactional
+        @Override
     public NewsEntity update(NewsEntity entity) {
         NewsEntity dbEntity = getEntityManager().find(getEntityClass(), entity.getId());
         entity.setCreateDate(dbEntity.getCreateDate());
@@ -49,22 +48,20 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<NewsEntity> readAll() {
         var findAll = getEntityManager().createQuery("" +
                 "SELECT DISTINCT a FROM " + getTableName() + " a " +
-                "LEFT JOIN FETCH a.tags"
+                "LEFT JOIN FETCH a.tags", NewsEntity.class
         );
         return findAll.getResultList();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Optional<NewsEntity> readById(Long id) {
         var findOne = getEntityManager().createQuery("" +
                 "SELECT DISTINCT a FROM " + getTableName() + " a " +
                 "LEFT JOIN FETCH a.tags " +
-                "WHERE a.id=:id"
+                "WHERE a.id=:id", NewsEntity.class
         );
         findOne.setParameter("id", id);
         var findList = findOne.getResultList();
@@ -75,7 +72,6 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     }
 
     @Override
-    @Transactional
     public List<NewsEntity> readNewsByCriteria(NewsEntity req) {
         //TODO: refactor
         var criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -121,8 +117,9 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
 
         criteriaQuery.select(news).where(predicates.toArray(Predicate[]::new)).distinct(true);
 
-        var result =  entityManager.createQuery(criteriaQuery).setHint("javax.persistence.loadgraph", fetchGraph).getResultList();
-
-        return result;
+        return entityManager
+                .createQuery(criteriaQuery)
+                .setHint("javax.persistence.loadgraph", fetchGraph)
+                .getResultList();
     }
 }
