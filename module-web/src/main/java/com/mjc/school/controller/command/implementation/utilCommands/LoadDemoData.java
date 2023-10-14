@@ -20,6 +20,7 @@ public class LoadDemoData implements Command {
     @Override
     public void execute() {
         demoDataLoader.populateAuthors();
+        demoDataLoader.populateTags();
         demoDataLoader.populateNews();
     }
 }
