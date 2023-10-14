@@ -51,7 +51,7 @@ public class TagRepositoryImpl extends AbstractBaseRepositoryImpl<TagEntity> imp
     @Transactional(readOnly = true)
     public List<TagEntity> readAll() {
         var findAll = getEntityManager().createQuery("" +
-                "SELECT a FROM " + getTableName() + " a " +
+                "SELECT DISTINCT a FROM " + getTableName() + " a " +
                 "LEFT JOIN FETCH a.news"
         );
         return findAll.getResultList();
