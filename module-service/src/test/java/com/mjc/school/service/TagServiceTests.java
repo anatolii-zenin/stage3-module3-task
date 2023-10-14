@@ -101,7 +101,7 @@ public class TagServiceTests {
     public void updateTagsTest() {
         String authorName = "testAuthor";
         String tagName = "tagTitle";
-        String tagNameUpdated = "tagTitleUpdated";
+        String tagNameUpdated = "tagTitleUpd";
         String newsTitle = "newsTitle";
         String newsContent = "testContent";
 
@@ -136,7 +136,7 @@ public class TagServiceTests {
         String authorName = "testAuthor";
         String newsTitle = "testTitle";
         String newsContent = "testContent";
-        String tagName = "tag";
+        String tagName = "tagg";
 
         var authorId = createAuthor(authorName);
         var authorEntry = authorService.readById(authorId);
