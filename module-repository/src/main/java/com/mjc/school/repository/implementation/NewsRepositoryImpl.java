@@ -75,12 +75,8 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var criteriaQuery = criteriaBuilder.createQuery(NewsEntity.class);
         Root<NewsEntity> news = criteriaQuery.from(NewsEntity.class);
-        var newsAuthors = news.join("author", JoinType.LEFT);
-        var newsTags = news.join("tags", JoinType.LEFT);
 
         EntityGraph<NewsEntity> fetchGraph = getEntityManager().createEntityGraph(NewsEntity.class);
-        fetchGraph.addSubgraph("author");
-        fetchGraph.addSubgraph("tags");
 
         var predicates = new ArrayList<Predicate>();
 
@@ -88,6 +84,8 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         var authorId = req.getAuthor().getId();
 
         if (authorName != null || authorId != null) {
+            fetchGraph.addSubgraph("author");
+            var newsAuthors = news.join("author", JoinType.LEFT);
             if (authorName != null) {
                 predicates.add(criteriaBuilder.equal(newsAuthors.get("name"), authorName));
             } else {
@@ -105,6 +103,8 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
 
         var tags = req.getTags();
         if (tags.size() > 0) {
+            fetchGraph.addSubgraph("tags");
+            var newsTags = news.join("tags", JoinType.LEFT);
             for (var tag : tags) {
                 if (tag.getName() != null)
                     predicates.add(criteriaBuilder.equal(newsTags.get("name"), tag.getName()));

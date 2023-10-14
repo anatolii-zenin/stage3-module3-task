@@ -20,7 +20,7 @@ public class NewsEntity implements BaseEntity<Long> {
     private String content;
     private LocalDateTime createDate;
     private LocalDateTime lastUpdateDate;
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private AuthorEntity author;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
