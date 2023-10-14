@@ -12,7 +12,6 @@ import java.util.List;
 @Mapper(componentModel = "spring", uses = NewsDTOMapper.class)
 @Component
 public abstract class TagDTOMapper {
-//    @Mapping(target = "news", source = "tagEntity.news")
     public abstract TagDTOResp entityToResp(TagEntity tagEntity);
 
     @Mapping(ignore = true, target = "news")
