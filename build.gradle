@@ -35,6 +35,8 @@ subprojects {
 
         annotationProcessor "org.mapstruct:mapstruct-processor:$mapstructVersion"
         implementation "org.mapstruct:mapstruct:$mapstructVersion"
+
+        runtimeOnly 'com.h2database:h2:2.2.224'
     }
     test {
         useJUnitPlatform()
