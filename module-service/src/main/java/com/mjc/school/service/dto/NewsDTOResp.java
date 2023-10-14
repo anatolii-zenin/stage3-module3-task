@@ -24,6 +24,13 @@ public class NewsDTOResp {
         return "[" + id + "] " + title + ". created: " +
                 createDate.format(DateTimeFormatter.ofPattern(dateFormatPattern)) + ". modified: " +
                 lastUpdateDate.format(DateTimeFormatter.ofPattern(dateFormatPattern)) + ". author: " +
-                getAuthor().getName() + ". " + content;
+                getAuthor().getName() + ". " + " tags: " + tagsToString() + ". "  + content;
+    }
+
+    private String tagsToString() {
+        var tagString = new StringBuilder();
+        for (var tag : tags)
+            tagString.append(tag.toString() + " ");
+        return tagString.toString().trim();
     }
 }
