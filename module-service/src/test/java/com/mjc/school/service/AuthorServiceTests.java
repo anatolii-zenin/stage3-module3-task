@@ -23,21 +23,21 @@ public class AuthorServiceTests {
 
     @Test
     public void CreateReadAuthorTest() {
-        String authorName1 = "testAuthor1";
-        String authorName2 = "testAuthor2";
-
         authorService = context.getBean(AuthorServiceImpl.class);
-        var authorReq = new AuthorDTOReq();
-        authorReq.setName(authorName1);
-        authorService.create(authorReq);
-        authorReq.setName(authorName2);
-        authorService.create(authorReq);
-        var entries = authorService.readAll();
-        assertEquals("First entry is not as expected", authorName1, entries.get(0).getName());
-        assertEquals("Second entry is not as expected", authorName2, entries.get(1).getName());
 
-        var entryById = authorService.readById(1L);
-        assertEquals("Entry by ID is not as expected", authorName1, entryById.getName());
+        var testEntries = 5;
+        for (int i = 0; i < testEntries; i++) {
+            String authorName = "testAuthor" + i;
+
+            var authorId = createAuthor(authorName);
+            var author = authorService.readById(authorId);
+
+            assertEquals("Entry id is not as expected", authorId, author.getId());
+            assertEquals("Entry name is not as expected", authorName, author.getName());
+        }
+
+        var allEntries = authorService.readAll();
+        assertEquals("Incorrect number of entries:", testEntries, allEntries.size());
     }
 
     @Test
@@ -76,5 +76,11 @@ public class AuthorServiceTests {
         authorService.deleteById(id);
         entry = authorService.readById(id);
         assertEquals("Entry is not properly deleted", null, entry);
+    }
+
+    private Long createAuthor(String name) {
+        var authorReq = new AuthorDTOReq();
+        authorReq.setName(name);
+        return authorService.create(authorReq).getId();
     }
 }
