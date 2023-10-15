@@ -7,9 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Scope("singleton")
@@ -45,29 +43,5 @@ public class TagRepositoryImpl extends AbstractBaseRepositoryImpl<TagEntity> imp
                 "WHERE a.news_id=:newsId", TagEntity.class);
         findByNewsId.setParameter("newsId",  + newsId);
         return findByNewsId.getResultList();
-    }
-
-    @Override
-    public List<TagEntity> readAll() {
-        var findAll = getEntityManager().createQuery("" +
-                "SELECT DISTINCT a FROM " + getTableName() + " a " +
-                "LEFT JOIN FETCH a.news", TagEntity.class
-        );
-        return findAll.getResultList();
-    }
-
-    @Override
-    public Optional<TagEntity> readById(Long id) {
-        var findOne = getEntityManager().createQuery("" +
-                "SELECT a FROM " + getTableName() + " a " +
-                "LEFT JOIN FETCH a.news " +
-                "WHERE a.id=:id", TagEntity.class
-        );
-        findOne.setParameter("id", id);
-        var findList = findOne.getResultList();
-        if (findList.size() == 0)
-            return Optional.empty();
-        var result = (TagEntity) findList.get(0);
-        return Optional.ofNullable(result);
     }
 }

@@ -5,7 +5,6 @@ import com.mjc.school.repository.model.implementation.NewsEntity;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.JoinType;
@@ -13,7 +12,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @Scope("singleton")
@@ -46,37 +44,11 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     }
 
     @Override
-    public List<NewsEntity> readAll() {
-        var findAll = getEntityManager().createQuery("" +
-                "SELECT DISTINCT a FROM " + getTableName() + " a " +
-                "LEFT JOIN FETCH a.tags", NewsEntity.class
-        );
-        return findAll.getResultList();
-    }
-
-    @Override
-    public Optional<NewsEntity> readById(Long id) {
-        var findOne = getEntityManager().createQuery("" +
-                "SELECT DISTINCT a FROM " + getTableName() + " a " +
-                "LEFT JOIN FETCH a.tags " +
-                "WHERE a.id=:id", NewsEntity.class
-        );
-        findOne.setParameter("id", id);
-        var findList = findOne.getResultList();
-        if (findList.size() == 0)
-            return Optional.empty();
-        var result = (NewsEntity) findList.get(0);
-        return Optional.ofNullable(result);
-    }
-
-    @Override
     public List<NewsEntity> readNewsByCriteria(NewsEntity req) {
         //TODO: refactor
         var criteriaBuilder = entityManager.getCriteriaBuilder();
         var criteriaQuery = criteriaBuilder.createQuery(NewsEntity.class);
         Root<NewsEntity> news = criteriaQuery.from(NewsEntity.class);
-
-        EntityGraph<NewsEntity> fetchGraph = getEntityManager().createEntityGraph(NewsEntity.class);
 
         var predicates = new ArrayList<Predicate>();
 
@@ -84,7 +56,6 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
         var authorId = req.getAuthor().getId();
 
         if (authorName != null || authorId != null) {
-            fetchGraph.addSubgraph("author");
             var newsAuthors = news.join("author", JoinType.LEFT);
             if (authorName != null) {
                 predicates.add(criteriaBuilder.equal(newsAuthors.get("name"), authorName));
@@ -103,7 +74,6 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
 
         var tags = req.getTags();
         if (tags.size() > 0) {
-            fetchGraph.addSubgraph("tags");
             var newsTags = news.join("tags", JoinType.LEFT);
             for (var tag : tags) {
                 if (tag.getName() != null)
@@ -115,9 +85,6 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
 
         criteriaQuery.select(news).where(predicates.toArray(Predicate[]::new)).distinct(true);
 
-        return entityManager
-                .createQuery(criteriaQuery)
-                .setHint("javax.persistence.loadgraph", fetchGraph)
-                .getResultList();
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }
