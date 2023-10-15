@@ -46,6 +46,9 @@ public class TagServiceTests {
             String newsContent = "newsContent" + i;
 
             var tagId = createTag(tagName);
+            var tag = tagService.readById(tagId);
+            assertEquals("Entry id is not as expected", tagId, tag.getId());
+
             List<TagDTOReq> tags = new ArrayList<>();
             addTagById(tags, tagId);
             var newsId = createNews(authorId, newsTitle, newsContent, tags);
