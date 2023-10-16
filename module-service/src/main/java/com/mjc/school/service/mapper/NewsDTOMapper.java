@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Mapper(componentModel = "spring", uses = {TagDTOMapper.class, AuthorDTOMapper.class})
 @Component
 public abstract class NewsDTOMapper {
-
     @Mapping(target = "author", source = "newsEntity.author")
     public abstract NewsDTOResp newsToDto(NewsEntity newsEntity);
 
