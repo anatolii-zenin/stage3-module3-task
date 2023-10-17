@@ -20,7 +20,7 @@ public class NewsRepositoryImpl extends AbstractBaseRepositoryImpl<NewsEntity>
     @PersistenceContext
     EntityManager entityManager;
 
-        @Override
+    @Override
     public NewsEntity update(NewsEntity entity) {
         NewsEntity dbEntity = getEntityManager().find(getEntityClass(), entity.getId());
         entity.setCreateDate(dbEntity.getCreateDate());
